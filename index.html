@@ -162,6 +162,8 @@
   .secs { display: grid; gap: 18px; margin-top: 26px; }
   .secs h4 { font-size: 15px; font-weight: 600; color: var(--orange-deep); margin-bottom: 6px; }
   .secs p { font-size: 14.5px; line-height: 1.7; color: var(--ink-2); max-width: 70ch; }
+  .sheet-link { margin-top: 26px; }
+  .sheet-link[hidden] { display: none; }
 
   /* ---------- contact ---------- */
   .contact { background: var(--cream-2); padding: 100px 0 40px; }
@@ -369,11 +371,27 @@
     <div class="how" id="dhow"></div>
     <div class="art" id="dart"></div>
     <div class="secs" id="dsecs"></div>
+    <a class="btn sheet-link" id="dlink" target="_blank" rel="noopener" hidden></a>
   </div>
 </div>
 
 <script>
   const PROJECTS = [
+    {
+      name: 'Listing Films',
+      kicker: 'Small business',
+      short: 'Cinematic tour films for real estate listings, made from the agent’s own photos. Each one ships with a scroll-through property site.',
+      tags: [['AI video','peach'],['Real estate','blue'],['Web design','mint'],['Business','']],
+      thumb: 'assets/listing-films.jpg',
+      art: { img: 'assets/listing-films-wide.jpg' },
+      how: 'Listing photos → shot plan → image-to-video clips → stitched film → scroll-scrubbed property page + vertical reel',
+      link: { href: 'https://listingfilms1.netlify.app', label: 'Visit Listing Films' },
+      secs: [
+        ['What it is', 'A small business I started in September 2026. Real estate agents send me the photos from a listing and get back a 30 to 45 second cinematic film of the house, a single-property website where the film plays as you scroll, and a vertical reel for Instagram. The first real job was a three-bedroom on an acre in Napa, listed at $1,995,000.'],
+        ['How it works', 'Every frame starts from a real listing photo. I write a shot plan for each one (the camera move, how long it holds, which model preset), generate the clips with an image-to-video model, and stitch them into one continuous film with crossfades. The property page is built to a black-and-white design system I wrote for the brand, and it takes on the colors of the house it is showing. The rule I hold to: the film cannot make the house look different than it does in person, because that is an MLS misrepresentation problem for the agent.'],
+        ['Why I made it', 'I know real estate agents, and the alternative for them is a videographer at $200 to $500 a listing plus a separate fee for a property site. I can do both for a fraction of that because the AI tools do the camera work. Every film carries a small “Film by Listing Films” credit at the end, so the work advertises itself with every listing that goes out.'],
+      ],
+    },
     {
       name: 'Peach Tree Golf Tracker',
       kicker: 'Field-built software',
@@ -517,6 +535,8 @@
     art.className = 'art' + (p.art.strip ? ' strip' : '');
     art.innerHTML = p.art.strip ? p.art.strip.map(s => `<img src="${s}" alt="">`).join('') : `<img src="${p.art.img}" alt="">`;
     document.getElementById('dsecs').innerHTML = p.secs.map(([h, t]) => `<div><h4>${h}</h4><p>${t}</p></div>`).join('');
+    const link = document.getElementById('dlink');
+    if (p.link) { link.href = p.link.href; link.textContent = p.link.label; link.hidden = false; } else { link.hidden = true; link.removeAttribute('href'); }
     lastFocus = document.activeElement;
     sheet.classList.add('open');
     sheet.querySelector('.sheet-in').scrollTop = 0;
